@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Detect Light
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page5">
+  <form id="detectLight-form3">
+    <ion-item id="detectLight-range3">
+      <ion-range min="0" max="255" step="1" color="positive" value="50">
+        <ion-label range-left>
+          Sensitivity
+        </ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item id="detectLight-toggle1">
+      <ion-label>
+        Off / On
+      </ion-label>
+      <ion-toggle color="positive" checked="false"></ion-toggle>
+    </ion-item>
+  </form>
+</ion-content>

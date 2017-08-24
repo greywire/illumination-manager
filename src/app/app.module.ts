@@ -1,40 +1,36 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-
-import { Camera } from '@ionic-native/camera';
-
 import { MyApp } from './app.component';
-import { LoginPage } from '../pages/login/login';
-import { SignupPage } from '../pages/signup/signup';
-import { ConfirmPage } from '../pages/confirm/confirm';
+import { IlluminationManagerPage } from '../pages/illumination-manager/illumination-manager';
+import { FlashlightPage } from '../pages/flashlight/flashlight';
+import { ReadingPage } from '../pages/reading/reading';
+import { DetectLightPage } from '../pages/detect-light/detect-light';
+import { NightLightPage } from '../pages/night-light/night-light';
+import { ColorOrganPage } from '../pages/color-organ/color-organ';
+import { CountdownPage } from '../pages/countdown/countdown';
+import { PresetPage } from '../pages/preset/preset';
+import { SleepAndWakePage } from '../pages/sleep-and-wake/sleep-and-wake';
 import { SettingsPage } from '../pages/settings/settings';
-import { AboutPage } from '../pages/about/about';
-import { AccountPage } from '../pages/account/account';
-import { TabsPage } from '../pages/tabs/tabs';
-import { TasksPage } from '../pages/tasks/tasks';
-import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { User } from '../providers/user';
-import { Cognito } from '../providers/aws.cognito';
-import { DynamoDB } from '../providers/aws.dynamodb';
-
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
-    SignupPage,
-    ConfirmPage,
-    SettingsPage,
-    AboutPage,
-    AccountPage,
-    TabsPage,
-    TasksPage,
-    TasksCreatePage
+    IlluminationManagerPage,
+    FlashlightPage,
+    ReadingPage,
+    DetectLightPage,
+    NightLightPage,
+    ColorOrganPage,
+    CountdownPage,
+    PresetPage,
+    SleepAndWakePage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -43,27 +39,22 @@ import { DynamoDB } from '../providers/aws.dynamodb';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage,
-    SignupPage,
-    ConfirmPage,
-    SettingsPage,
-    AboutPage,
-    AccountPage,
-    TabsPage,
-    TasksPage,
-    TasksCreatePage
+    IlluminationManagerPage,
+    FlashlightPage,
+    ReadingPage,
+    DetectLightPage,
+    NightLightPage,
+    ColorOrganPage,
+    CountdownPage,
+    PresetPage,
+    SleepAndWakePage,
+    SettingsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Camera,
-    User,
-    Cognito,
-    DynamoDB
+    BluetoothSerial
   ]
 })
 export class AppModule {}
-
-declare var AWS;
-AWS.config.customUserAgent = AWS.config.customUserAgent + ' Ionic';

@@ -1,25 +1,32 @@
 import { Component } from '@angular/core';
-import { App } from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import { AboutPage } from '../about/about';
-import { AccountPage } from '../account/account';
-
-import { User } from '../../providers/providers';
+import { NavController } from 'ionic-angular';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 @Component({
+  selector: 'page-settings',
   templateUrl: 'settings.html'
 })
 export class SettingsPage {
 
-  public aboutPage = AboutPage;
-  public accountPage = AccountPage;
+  availabledevices = [];
+  bondeddevices = [];
 
-  constructor(public user: User, public app: App) {
+  constructor(public navCtrl: NavController, private bluetoothSerial: BluetoothSerial) {
+    let model = this;
+
+    this.bluetoothSerial.list().then(function(devices) {
+      model.bondeddevices = devices;
+    })
+
+    this.bluetoothSerial.discoverUnpaired().then(function(devices) {
+      console.log(devices);
+      model.availabledevices = devices;
+
+    }, function() {console.log("failed");
+    model.availabledevices = [{'name':'None'}];});
   }
 
-  logout() {
-    this.user.logout();
-    this.app.getRootNav().setRoot(LoginPage);
+  addDevice(item) {
+    console.log("add");
   }
-
 }
