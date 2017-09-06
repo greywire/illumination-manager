@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
-import { NavController,NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 
+/**
+ * Generated class for the CandlePage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+
 @Component({
-  selector: 'page-flashlight',
-  templateUrl: 'flashlight.html'
+  selector: 'page-candle',
+  templateUrl: 'candle.html',
 })
-export class FlashlightPage {
-  brightness = 200;
+export class CandlePage {
   pids: any[] = [];
 
-  constructor(public navCtrl: NavController, private ble: BLE, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private ble: BLE) {
     let model = this;
 
     this.pids = navParams.get('pids');
@@ -30,18 +36,18 @@ export class FlashlightPage {
 
   go() {
     let ble = this.ble;
-    let b = this.brightness;
+    
     let bluefruit = {
       serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
       txCharacteristic: '6e400002-b5a3-f393-e0a9-e50e24dcca9e', // transmit is from the phone's perspective
       rxCharacteristic: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'  // receive is from the phone's perspective
     };
-console.log("sending command");
+
     ble.writeWithoutResponse(
       this.pids[0].id,
       bluefruit.serviceUUID,
       bluefruit.txCharacteristic,
-      this.stringToBytes("M1 " + b + "\n\r")
+      this.stringToBytes("M7\n\r")
       );
   }
 }

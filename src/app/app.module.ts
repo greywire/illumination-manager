@@ -11,13 +11,14 @@ import { ColorOrganPage } from '../pages/color-organ/color-organ';
 import { CountdownPage } from '../pages/countdown/countdown';
 import { PresetPage } from '../pages/preset/preset';
 import { SleepAndWakePage } from '../pages/sleep-and-wake/sleep-and-wake';
-import { SettingsPage } from '../pages/settings/settings';
+import { CandlePage } from '../pages/candle/candle';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BLE } from '@ionic-native/ble';
- 
+import { BackgroundMode } from '@ionic-native/background-mode';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -30,7 +31,7 @@ import { BLE } from '@ionic-native/ble';
     CountdownPage,
     PresetPage,
     SleepAndWakePage,
-    SettingsPage
+    CandlePage
   ],
   imports: [
     BrowserModule,
@@ -48,13 +49,14 @@ import { BLE } from '@ionic-native/ble';
     CountdownPage,
     PresetPage,
     SleepAndWakePage,
-    SettingsPage
+    CandlePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BLE
+    BLE,
+    BackgroundMode
   ]
 })
 export class AppModule {}
