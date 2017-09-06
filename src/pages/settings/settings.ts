@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { BLE } from '@ionic-native/ble';
 
 @Component({
   selector: 'page-settings',
@@ -11,10 +11,10 @@ export class SettingsPage {
   availabledevices = [];
   bondeddevices = [];
 
-  constructor(public navCtrl: NavController, private bluetoothSerial: BluetoothSerial) {
+  constructor(public navCtrl: NavController, private ble: BLE) {
     let model = this;
-
-    this.bluetoothSerial.list().then(function(devices) {
+/*
+    this.ble.scan().then(function(devices) {
       model.bondeddevices = devices;
     })
 
@@ -23,10 +23,11 @@ export class SettingsPage {
       model.availabledevices = devices;
 
     }, function() {console.log("failed");
-    model.availabledevices = [{'name':'None'}];});
+    model.availabledevices = [{'name':'None'}];});*/
   }
 
   addDevice(item) {
+//    this.bluetoothSerial.connectInsecure(item.id);
     console.log("add");
   }
 }
