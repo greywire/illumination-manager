@@ -11,13 +11,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page4">
-  <form id="reading-form2">
+
     <ion-item id="reading-range2">
-      <ion-range min="0" max="255" step="1" color="positive" value="50">
+      <ion-range min="0" max="255" step="1" color="positive" value="50" [(ngModel)]="brightness">
         <ion-label range-left>
           Brightness
         </ion-label>
       </ion-range>
     </ion-item>
-  </form>
+<button  ion-button color="positive"  on-click="go()">Go</button>
 </ion-content>

@@ -11,6 +11,7 @@ import { CandlePage } from '../candle/candle';
 import { SleepAndWakePage } from '../sleep-and-wake/sleep-and-wake';
 import { BLE } from '@ionic-native/ble';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'page-illumination-manager',
@@ -18,34 +19,68 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 })
 export class IlluminationManagerPage {
   pids: any[] = [];
+  bluefruit: any;
+  connected: boolean = false;
 
-  constructor(public navCtrl: NavController,private ble: BLE, private backgroundMode: BackgroundMode) {
-  this.backgroundMode.enable();
+  constructor(public navCtrl: NavController,private ble: BLE, private backgroundMode: BackgroundMode,private cd: ChangeDetectorRef) {
+    this.bluefruit = {
+      serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
+      txCharacteristic: '6e400002-b5a3-f393-e0a9-e50e24dcca9e', // transmit is from the phone's perspective
+      rxCharacteristic: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'  // receive is from the phone's perspective
+    };
+
+    this.backgroundMode.enable();
+
+    this.scan();
   }
 
   ionViewDidEnter() {
     this.scan();
   }
 
-  scan() {
-    let ble = this.ble;
+  //** connect or disconnect
+  toggleconnection() {
+    if (this.connected) {
+      this.ble.disconnect(this.pids[0].id);
+      this.connected = false;
+    } else {
+      this.scan();
+    }
+  }
 
-    ble.scan([],10).subscribe((device)=> {
+  // Scan for devices with the right name
+  scan() {
+    this.ble.scan([],10).subscribe((device)=> {
         if (device.name == "Personal Illumination Device") {
-          this.foundPid(device);
+          this.connectPid(device);
         }
 
     }, error => {console.log(error);});
   }
 
-  foundPid(pid) {
+  //** connect to a device
+  connectPid(pid) {
+    //let timeout = 0;
+
     this.ble.connect(pid.id).subscribe((data)=>{
+      this.connected = true;
+      this.cd.detectChanges();
       //alert("connected");
       },error=>{
+        this.connected = false;
+        //timeout = setTimeout(()=>{ this.scan(); }, 4000)
                 //alert(error);
       });
 
     this.pids.push(pid);
+  }
+
+  stringToBytes(string) {
+      var array = new Uint8Array(string.length);
+      for (var i = 0, l = string.length; i < l; i++) {
+          array[i] = string.charCodeAt(i);
+      }
+      return array.buffer;
   }
 
   goToFlashlight(params){
@@ -59,8 +94,12 @@ export class IlluminationManagerPage {
   }
 
   goToDetectLight(params){
-    if (!params) params = {};
-    this.navCtrl.push(DetectLightPage, {pids: this.pids});
+    this.ble.writeWithoutResponse(
+      this.pids[0].id,
+      this.bluefruit.serviceUUID,
+      this.bluefruit.txCharacteristic,
+      this.stringToBytes("M3\n\r")
+    );
   }
 
   goToNightLight(params){
@@ -74,13 +113,21 @@ export class IlluminationManagerPage {
   }
 
   goToColorOrgan(params){
-    if (!params) params = {};
-    this.navCtrl.push(ColorOrganPage, {pids: this.pids});
+    this.ble.writeWithoutResponse(
+      this.pids[0].id,
+      this.bluefruit.serviceUUID,
+      this.bluefruit.txCharacteristic,
+      this.stringToBytes("M6\n\r")
+    );
   }
 
   goToCandle(params){
-    if (!params) params = {};
-    this.navCtrl.push(CandlePage, {pids: this.pids});
+    this.ble.writeWithoutResponse(
+      this.pids[0].id,
+      this.bluefruit.serviceUUID,
+      this.bluefruit.txCharacteristic,
+      this.stringToBytes("M7\n\r")
+    );
   }
 
   goToPreset2(params){
@@ -90,6 +137,6 @@ export class IlluminationManagerPage {
 
   goToSleepAndWake(params){
     if (!params) params = {};
-    this.navCtrl.push(SleepAndWakePage);
+    this.navCtrl.push(SleepAndWakePage, {pids: this.pids});
   }
 }

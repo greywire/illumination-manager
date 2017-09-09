@@ -6,50 +6,57 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page1">
-  <div id="illuminationManager-container1" class="row">
-    <button id="illuminationManager-button2" ion-button color="positive" block class="col col-50" on-click="goToFlashlight()">
+  <ion-grid>
+  <ion-row id="illuminationManager-container1" >
+    <ion-col>
+    <button id="illuminationManager-button2" ion-button round large color="positive" block class="col col-50" on-click="goToFlashlight()">
       <ion-icon name="bulb"></ion-icon>
       Flashlight
     </button>
-    <button id="illuminationManager-button4" ion-button color="positive" block class="col col-50" on-click="goToReading()">
+  </ion-col>
+  <ion-col>
+    <button id="illuminationManager-button4" ion-button round large  color="positive" block class="col col-50" on-click="goToReading()">
       <ion-icon name="book"></ion-icon>
       Reading
     </button>
-  </div>
-  <div id="illuminationManager-container3" class="row">
-    <button id="illuminationManager-button5" ion-button color="positive" block class="col col-50" on-click="goToDetectLight()">
+  </ion-col>
+  </ion-row>
+  <ion-row id="illuminationManager-container3">
+    <ion-col>
+    <button id="illuminationManager-button5" ion-button round large  color="positive" block class="col col-50" on-click="goToDetectLight()">
       <ion-icon name="sunny"></ion-icon>
       Detect
     </button>
-    <button id="illuminationManager-button6" ion-button color="positive" block class="col col-50" on-click="goToNightLight()">
-      <ion-icon name="cloudy-night"></ion-icon>
-      Nightlight
-    </button>
-  </div>
-  <div id="illuminationManager-container4" class="row">
-    <button id="illuminationManager-button8" ion-button color="positive" block class="col col-50" on-click="goToColorOrgan()">
+  </ion-col>
+      <ion-col>
+        <button id="illuminationManager-button13" ion-button round large  color="positive" block class="col col-50" on-click="goToCandle()">
+          <ion-icon name="flame"></ion-icon>
+          Candle
+        </button>
+  </ion-col>
+  </ion-row>
+  <ion-row id="illuminationManager-container4">
+    <ion-col>
+    <button id="illuminationManager-button8" ion-button round large  color="positive" block class="col col-50" on-click="goToColorOrgan()">
       <ion-icon name="color-wand"></ion-icon>
       Organ
     </button>
-    <button id="illuminationManager-button9" ion-button color="positive" block class="col col-50" on-click="goToCountdown()">
-      <ion-icon name="clock"></ion-icon>
-      Countdown
-    </button>
-  </div>
-  <div id="illuminationManager-container5" class="row">
-    <button id="illuminationManager-button10" ion-button color="positive" block class="col" on-click="goToSleepAndWake()">
+</ion-col>
+  <ion-col>
+    <button id="illuminationManager-button10" ion-button round large  color="positive" block class="col" on-click="goToSleepAndWake()">
       <ion-icon name="alarm"></ion-icon>
-      Sleep and Wake
+      Sleep / Wake
     </button>
-  </div>
-  <div id="illuminationManager-container6" class="row">
-    <button id="illuminationManager-button13" ion-button color="positive" block class="col col-50" on-click="goToCandle()">
-      <ion-icon name="color-palette"></ion-icon>
-      Candle
+  </ion-col>
+  </ion-row>
+
+  <ion-row >
+    <ion-col>
+    <button ion-button round large  color="positive" block class="col" on-click="toggleconnection()">
+      <ion-icon></ion-icon>
+      <span *ngIf="connected == false">Connect to </span><span *ngIf="connected">Disconnect from </span>&nbsp;device
     </button>
-    <button id="illuminationManager-button14" ion-button color="positive" block class="col col-50" on-click="goToPreset()">
-      <ion-icon name="color-palette"></ion-icon>
-      Preset
-    </button>
-  </div>
+  </ion-col>
+  </ion-row>
+</ion-grid>
 </ion-content>

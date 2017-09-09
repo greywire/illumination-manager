@@ -11,25 +11,29 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page10">
-  <form id="sleepAndWake-form9">
+  <ion-item id="sleepAndWake-input2">
+
+      <ion-label range-left>
+        Nigthlight timeout minutes
+      </ion-label>
+    <ion-input max="120" type="number" [(ngModel)]="nightlightTime"></ion-input>
+  </ion-item>
+
     <ion-item id="sleepAndWake-input1">
       <ion-label>
-        Wake time
+        Sleep for
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+
+      <ion-datetime displayFormat="H:m" [(ngModel)]="sleepTime"></ion-datetime>
     </ion-item>
-    <ion-item id="sleepAndWake-input2">
-      <ion-label>
-        Sleep time
-      </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
-    </ion-item>
+
     <ion-item id="sleepAndWake-range13">
-      <ion-range min="0" max="120" step="1" color="positive" value="30">
+
         <ion-label range-left>
-          Sleep timeout
+          Wake timeout minutes
         </ion-label>
-      </ion-range>
+<ion-input max="120" type="number" [(ngModel)]="wakelightTime"></ion-input>
     </ion-item>
-  </form>
+
+  <button  ion-button color="positive"  on-click="go()">Set</button>
 </ion-content>
