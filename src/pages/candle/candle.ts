@@ -17,7 +17,7 @@ export class CandlePage {
   pids: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private ble: BLE) {
-    let model = this;
+    //let model = this;
 
     this.pids = navParams.get('pids');
   }
@@ -36,7 +36,7 @@ export class CandlePage {
 
   go() {
     let ble = this.ble;
-    
+
     let bluefruit = {
       serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
       txCharacteristic: '6e400002-b5a3-f393-e0a9-e50e24dcca9e', // transmit is from the phone's perspective

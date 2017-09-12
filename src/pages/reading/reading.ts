@@ -11,7 +11,7 @@ export class ReadingPage {
   pids: any[] = [];
 
   constructor(public navCtrl: NavController, private ble: BLE, public navParams: NavParams) {
-    let model = this;
+    //let model = this;
 
     this.pids = navParams.get('pids');
   }
