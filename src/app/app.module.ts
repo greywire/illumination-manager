@@ -18,6 +18,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BLE } from '@ionic-native/ble';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BLE,
-    BackgroundMode
+    BackgroundMode,
+    SpeechRecognition
   ]
 })
 export class AppModule {}

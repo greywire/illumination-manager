@@ -6,12 +6,13 @@ import { ReadingPage } from '../reading/reading';
 import { NightLightPage } from '../night-light/night-light';
 import { CountdownPage } from '../countdown/countdown';
 //import { ColorOrganPage } from '../color-organ/color-organ';
-import { PresetPage } from '../preset/preset';
+//import { PresetPage } from '../preset/preset';
 //import { CandlePage } from '../candle/candle';
 import { SleepAndWakePage } from '../sleep-and-wake/sleep-and-wake';
 import { BLE } from '@ionic-native/ble';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { ChangeDetectorRef } from '@angular/core';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 @Component({
   selector: 'page-illumination-manager',
@@ -22,7 +23,10 @@ export class IlluminationManagerPage {
   bluefruit: any;
   connected: boolean = false;
 
-  constructor(public navCtrl: NavController,private ble: BLE, private backgroundMode: BackgroundMode,private cd: ChangeDetectorRef) {
+  constructor(public navCtrl: NavController,
+      private ble: BLE, private backgroundMode: BackgroundMode,
+      private cd: ChangeDetectorRef, private speechRecognition: SpeechRecognition)
+  {
     this.bluefruit = {
       serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
       txCharacteristic: '6e400002-b5a3-f393-e0a9-e50e24dcca9e', // transmit is from the phone's perspective
@@ -32,10 +36,41 @@ export class IlluminationManagerPage {
     this.backgroundMode.enable();
 
     this.scan();
+
   }
 
   ionViewDidEnter() {
     this.scan();
+  }
+
+  doSpeech() {
+    this.speechRecognition.isRecognitionAvailable().then((available: boolean) => {
+    this.speechRecognition.startListening({matches: 1})
+      .subscribe(
+        (matches: Array<string>) => {
+          switch(matches[0]) {
+            case 'connect':
+              this.toggleconnection();
+              break;
+            case 'flashlight':
+              this.goToFlashlight();
+              break;
+            case 'candle':
+              this.goToCandle();
+              break;
+            case 'organ':
+              this.goToColorOrgan();
+            case 'reading':
+              this.goToReading();
+          }
+          console.log(matches)
+          
+        },
+        (onerror) => console.log('error:', onerror)
+      );
+
+      console.log(available)
+    });
   }
 
   //** connect or disconnect
@@ -83,17 +118,15 @@ export class IlluminationManagerPage {
       return array.buffer;
   }
 
-  goToFlashlight(params){
-    if (!params) params = {};
+  goToFlashlight(){
     this.navCtrl.push(FlashlightPage, {pids: this.pids});
   }
 
-  goToReading(params){
-    if (!params) params = {};
+  goToReading(){
     this.navCtrl.push(ReadingPage, {pids: this.pids});
   }
 
-  goToDetectLight(params){
+  goToDetectLight(){
     this.ble.writeWithoutResponse(
       this.pids[0].id,
       this.bluefruit.serviceUUID,
@@ -102,17 +135,15 @@ export class IlluminationManagerPage {
     );
   }
 
-  goToNightLight(params){
-    if (!params) params = {};
+  goToNightLight(){
     this.navCtrl.push(NightLightPage);
   }
 
-  goToCountdown(params){
-    if (!params) params = {};
+  goToCountdown(){
     this.navCtrl.push(CountdownPage, {pids: this.pids});
   }
 
-  goToColorOrgan(params){
+  goToColorOrgan(){
     this.ble.writeWithoutResponse(
       this.pids[0].id,
       this.bluefruit.serviceUUID,
@@ -121,7 +152,7 @@ export class IlluminationManagerPage {
     );
   }
 
-  goToCandle(params){
+  goToCandle(){
     this.ble.writeWithoutResponse(
       this.pids[0].id,
       this.bluefruit.serviceUUID,
@@ -130,13 +161,7 @@ export class IlluminationManagerPage {
     );
   }
 
-  goToPreset2(params){
-    if (!params) params = {};
-    this.navCtrl.push(PresetPage);
-  }
-
-  goToSleepAndWake(params){
-    if (!params) params = {};
+  goToSleepAndWake(){
     this.navCtrl.push(SleepAndWakePage, {pids: this.pids});
   }
 }
